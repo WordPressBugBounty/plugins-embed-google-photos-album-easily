@@ -2,7 +2,7 @@
 /**
 	Plugin Name: Embed Google Photos album
 	Description: Embed your Google Photos album direct from Google Photos
-	Version: 2.2.1
+	Version: 2.2.2
 	Plugin URI: https://www.publicalbum.org/blog/embedding-google-photos-albums
 	Author: pavex@ines.cz
 	Author URI: https://www.publicalbum.org/blog/about-pavex
@@ -226,7 +226,7 @@ class Pavex_embed_google_photos_album {
 	private function parse_photos($contents)
 	{
 		$m = NULL;
-		preg_match_all('~\"(http[^"]+)"\,[0-9^,]+\,[0-9^,]+~i', $contents, $m);
+		preg_match_all('~\"(http[^"]+)\"\,[0-9^,]+\,[0-9^,]+~i', $contents, $m);
 		return array_unique($m[1]);
 	}
 
@@ -248,13 +248,13 @@ class Pavex_embed_google_photos_album {
 			$items_code = '';
 			foreach ($photos as $photo) {
 				$src = sprintf('%s=w%d-h%d', $photo, $props -> imageWidth, $props -> imageHeight);
-				$items_code .= '<object data="' . $src . '"></object>';
+				$items_code .= '<object data="' . esc_url($src) . '"></object>';
 			}
 			return "<!-- publicalbum.org -->\n"
-				. '<div class="pa-' . $props -> mode . '-widget" style="' . $style . '"'
-				. ' data-link="' . $props -> link . '"'
+				. '<div class="pa-' . esc_attr($props -> mode) . '-widget" style="' . $style . '"'
+				. ' data-link="' . esc_url($props -> link) . '"'
 				. ' data-found="' . count($photos) . '"'
-				. ($title ? ' data-title="' . $title . '"' : '')
+				. ($title ? ' data-title="' . esc_attr($title) . '"' : '')
 				. ($props -> slideshowAutoplay !== NULL ? ' data-autoplay="' . ($props -> slideshowAutoplay ? 'true' : 'false') . '"' : '')
 				. ($props -> slideshowDelay > 0 ? ' data-delay="' . $props -> slideshowDelay . '"' : '')
 				. ($props -> slideshowRepeat !== NULL ? ' data-repeat="' . ($props -> slideshowRepeat ? 'true' : 'false') . '"' : '')
@@ -262,7 +262,7 @@ class Pavex_embed_google_photos_album {
 				. ($props -> mediaItemsEnlarge !== NULL ? ' data-mediaitems-enlarge="' . ($props -> mediaItemsEnlarge ? 'true' : 'false') . '"' : '')
 				. ($props -> mediaItemsStretch !== NULL ? ' data-mediaitems-stretch="' . ($props -> mediaItemsStretch ? 'true' : 'false') . '"' : '')
 				. ($props -> mediaItemsCover !== NULL ? ' data-mediaitems-cover="' . ($props -> mediaItemsCover ? 'true' : 'false') . '"' : '')
-				. ($props -> backgroundColor !== NULL ? ' data-background-color="' . $props -> backgroundColor . '"' : '')
+				. ($props -> backgroundColor !== NULL ? ' data-background-color="' . esc_attr($props -> backgroundColor) . '"' : '')
 				. '>' . $items_code . '</div>' . "\n";
 		}
 		return NULL;

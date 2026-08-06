@@ -3,7 +3,7 @@ Contributors: pavex
 Donate link: https://www.publicalbum.org/blog/about-pavex
 Tags: Google Photos, Embed Google Photos, Wordpress carousel, Carousel slideshow, Embed gallery
 Requires at least: 5.0
-Tested up to: 6.4.3
+Tested up to: 7.0.2
 Requires PHP: 5.3
 License: GPLv2 or later
 
@@ -95,6 +95,12 @@ The service can also be used as an alternative to [public Google Photos](https:/
 
 
 == Changelog ==
+
+= 2.2.2 =
+*Release Date - 4 August 2026*
+
+* security fix: escaped data-link, data-title, class, data-background-color and object data attributes with esc_attr()/esc_url() in get_embed_player_html_code(), fixing a stored XSS via the link shortcode attribute
+* Wordpress 7.0.2 test
 
 = 2.2.1 =
 *Release Date - 19 March 2024*
